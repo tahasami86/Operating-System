@@ -13,7 +13,7 @@ print_string_loop:
     mov ah, WHITE_ON_BLACK
 
     cmp al, 0 
-    jmp print_string_done
+    je print_string_done
 
     mov [edx],ax ; store character + attribute in video memory
 
