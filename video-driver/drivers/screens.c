@@ -1,5 +1,6 @@
 #include "screens.h"
 #include "ports.h"
+#include "../kernel/util.h"
 
 /*Helper functions Declare*/
 int get_cursor_offset();
@@ -89,6 +90,16 @@ int print_char(char c, int col, int row, char attr)
         videomem[offset] = c;
         videomem[offset + 1] = attr;
         offset += 2;
+    }
+
+    if(offset >= 2 * MAX_COLS * MAX_ROWS){
+        for (int i=1; i < MAX_ROWS ; i++){
+            memory_copy((get_offset(0,i) + VIDEO_ADDRESS),(get_offset(0,i-1)+ VIDEO_ADDRESS), 2 * MAX_COLS);
+        }
+
+        char *last_line = get_offset(0,MAX_ROWS -1) + VIDEO_ADDRESS;
+        for (int i =0; i < 2 * MAX_COLS;i++) last_line[i] = 0;
+        offset -= 2* MAX_COLS;
     }
     set_cursor_offset(offset);
     return offset;
