@@ -13,7 +13,7 @@ void main(){
     __asm__ __volatile__("int $2");
     __asm__ __volatile__("int $4");
     __asm__ __volatile__("int $5");
-    __asm__ __volatile__("int $6");
+   
 }
 
 
