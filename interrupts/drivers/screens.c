@@ -71,6 +71,7 @@ int print_char(char c, int col, int row, char attr)
     unsigned char *videomem = (unsigned char *) VIDEO_ADDRESS;
     if (!attr) attr = WHITE_ON_BLACK;
 
+    /*print red 'E' at the bootom right*/
     if(col >=MAX_COLS || row >= MAX_ROWS){
         videomem[2 * MAX_COLS * MAX_ROWS - 2] = 'E';
         videomem[2 * MAX_COLS * MAX_ROWS - 1 ] = RED_ON_WHITE;
@@ -97,6 +98,8 @@ int print_char(char c, int col, int row, char attr)
             memory_copy((get_offset(0,i) + VIDEO_ADDRESS),(get_offset(0,i-1)+ VIDEO_ADDRESS), 2 * MAX_COLS);
         }
 
+
+        /*Cleaning the last line*/
         char *last_line = get_offset(0,MAX_ROWS -1) + VIDEO_ADDRESS;
         for (int i =0; i < 2 * MAX_COLS;i++) last_line[i] = 0;
         offset -= 2* MAX_COLS;

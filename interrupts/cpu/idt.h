@@ -40,6 +40,6 @@ typedef struct {
 
 /* Functions implemented in idt.c */
 void set_idt_gate(int n, u32 handlers);
-void sed_idt();
+void set_idt();
 
 #endif

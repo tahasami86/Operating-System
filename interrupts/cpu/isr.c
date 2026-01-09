@@ -132,7 +132,7 @@ void irq_handler(register_t r){
 
     /*After every interrupt we need to send an EOI to the PICs
      * or they will not send another interrupt agai*/
-    if(interrupt_handlers[r.int_no] >= 40) port_byte_out(0xA0,0x20); /*slave*/
+    if(r.int_no >= 40) port_byte_out(0xA0,0x20); /*slave*/
     port_byte_out(0x20,0x20); /*master */
 
     if(interrupt_handlers[r.int_no] != 0) {
