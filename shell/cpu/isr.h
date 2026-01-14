@@ -78,7 +78,7 @@ extern void irq15();
 typedef struct {
     
     u16 ds; /* Data segment selector */
-    u32 edi, esi, ebp, esp, ebx, edx, ecx, eax; /* Pushed by pusha. 
+    u32 edi, esi, ebp, useless, ebx, edx, ecx, eax; /* Pushed by pusha. 
                                                    edi will be last pushed and just before ds
                                                    eax will be pushed after int_no*/
 
@@ -88,23 +88,23 @@ typedef struct {
                               and error_code will be first pushed on stack*/
 
 
-    u32 eip, cs, eflags, useresp, ss; /* Pushed by the processor automatically (eip ) 
+    u32 eip, cs, eflags, esp, ss; /* Pushed by the processor automatically (eip ) 
                                         will be last pushed by cpu on stack whereas ss or eflags 
                                         will be the first*/
 
 } register_t;
 
 void isr_install();
-void isr_handler(register_t t);
+void isr_handler(register_t *t);
 void irq_install();
 
-typedef void (*isr_t )(register_t);
+typedef void (*isr_t )(register_t*);
 /*Interrupt register Handler*/
 void register_interrupt_handler(u8 n, isr_t handler);
 
 
 /*irq handler*/
-void irq_handler(register_t t);
+void irq_handler(register_t *t);
 
 
 #endif

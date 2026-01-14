@@ -10,7 +10,7 @@
 
 int i=1;
 
-void main() {
+void kernel_main() {
     isr_install();
     irq_install();
 
@@ -24,7 +24,7 @@ void user_input(char *input) {
         asm volatile("hlt");
     }
     else if(strcmp(input,"PAGE") == 0){
-        u32 phys_addr;
+        uint32_t phys_addr;
         u32 page = kmalloc(400+13, (i%2), &phys_addr);
         char page_str[16] = "";
         hex_to_ascii(page, page_str);

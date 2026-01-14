@@ -25,7 +25,7 @@ const char sc_ascii[] = { '?', '?', '1', '2', '3', '4', '5', '6',
         'H', 'J', 'K', 'L', ';', '\'', '`', '?', '\\', 'Z', 'X', 'C', 'V', 
         'B', 'N', 'M', ',', '.', '/', '?', '?', '?', ' '};
 
-static void keyboard_handler(register_t regs){
+static void keyboard_handler(register_t *regs){
     /* The PIC gives us the scancode in port 0x60 */
     u32 scancode = port_word_in(0x60);
    

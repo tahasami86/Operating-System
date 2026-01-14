@@ -7,7 +7,7 @@
 
 u32 tick = 0;
 
-static void timer_handler(register_t regs)
+static void timer_handler(register_t *regs)
 {
 
     tick++;
