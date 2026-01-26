@@ -15,7 +15,8 @@ ASMFLAGS= -f bin
 C_SRC = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
 #ASM_SRC = kernel_entry.asm
-OBJ = $(C_SRC:.c=.o cpu/interrupt.o cpu/syscall.o) 
+OBJ =  $(C_SRC:.c=.o )  cpu/interrupt.o cpu/syscall_asm.o
+#OBJ += $(C_SRC:.c=.o cpu/syscall.o)
 
 # ========== TARGETS ==========
 all : run
@@ -57,4 +58,4 @@ debug: os-image.bin kernel.elf
 
 clean:
 	rm -f *.o *.bin *.dis *.elf
-	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
+	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o cpu/*.o libc/*.o

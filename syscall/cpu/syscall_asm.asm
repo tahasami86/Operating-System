@@ -5,12 +5,12 @@ global isr128
 isr128:
     cli 
     push byte 0 ; Dummy error code
-    push byte 128 ; Interrupt number(0x80)
+    push dword 0x80; Interrupt number(0x80)
     jmp syscall_common_stub
 
 syscall_common_stub:
     pusha ;Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
-    push ax,ds ; Lower 16-bits of eax = ds.
+    mov ax,ds ; Lower 16-bits of eax = ds.
     push eax
     mov ax, 0x10  ; kernel data segment descriptor
     mov ds, ax
@@ -37,8 +37,8 @@ syscall_common_stub:
     iret    ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
 ; Function to switch to user mode
-; global switch_to_user_mode
 
+global switch_to_user_mode
 switch_to_user_mode:
 
     ; Set up segments for user mode

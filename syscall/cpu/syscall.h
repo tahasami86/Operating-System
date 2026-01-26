@@ -16,8 +16,6 @@
 // System call handler
 void (syscall_handler) (register_t *);
 
-typedef void (*syscall_t);
-
 // User mode wrapper functions
 void user_print(char *str);
 void user_exit(int code);
