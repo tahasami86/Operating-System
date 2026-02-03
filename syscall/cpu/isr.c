@@ -121,12 +121,22 @@ char *exception_message[]={
 
 void isr_handler(register_t *r){
     kprint("Recevied interrupt: ");
-    char s[3];
+    char s[16];
     int_to_ascii(r->int_no, s);
     kprint(s);
     kprint("\n");
-    kprint(exception_message[r->int_no]);
-    kprint("\n");
+    if (r->int_no < 32) {
+        kprint(exception_message[r->int_no]);
+        kprint("\n");
+    }
+    if (r->int_no == 6) {  /* Invalid opcode */
+        kprint(" - INVALID OPCODE at address: ");
+        char addr[16];
+        hex_to_ascii(r->eip, addr);
+        kprint(addr);
+        kprint("\n");
+        while (1);
+    }
 }
 
 void register_interrupt_handler(u8 n, isr_t handler){

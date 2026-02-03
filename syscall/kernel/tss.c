@@ -1,16 +1,19 @@
 #include "tss.h"
+#include <stdint.h>
+#include <stddef.h>
 
 struct tss_entry tss;
 
 void tss_init(u32 idx, u32 kernel_ss, u32 kernel_esp) 
 {
     u32 base = (u32)&tss;
-    u32 limit = sizeof(tss);
+    u32 limit = sizeof(tss) - 1;
 
-    gdt_set_gate(6, base, limit, 0xE9, 0x00); // TSS segment
 
     //zero out the TSS
-    memset(&tss, 0, sizeof(tss));
+    memory_set((u8*)&tss, 0, sizeof(tss));
+
+    gdt_set_gate(5, base, limit, 0xE9, 0x00); // TSS segment
 
     tss.ss0 = kernel_ss; // Set the kernel stack segment
     tss.esp0 = kernel_esp; // Set the kernel stack pointer

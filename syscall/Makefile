@@ -15,7 +15,7 @@ ASMFLAGS= -f bin
 C_SRC = $(wildcard kernel/*.c drivers/*.c cpu/*.c libc/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h cpu/*.h libc/*.h)
 #ASM_SRC = kernel_entry.asm
-OBJ =  $(C_SRC:.c=.o )  cpu/interrupt.o cpu/syscall_asm.o
+OBJ =  $(C_SRC:.c=.o )  cpu/interrupt.o cpu/syscall_asm.o kernel/tss_helper.o
 #OBJ += $(C_SRC:.c=.o cpu/syscall.o)
 
 # ========== TARGETS ==========

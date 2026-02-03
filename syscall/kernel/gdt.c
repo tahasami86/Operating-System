@@ -4,7 +4,7 @@ struct gdt_entry gdt[6];
 struct gdt_ptr gdt_p;
 
 
-gdt_set_gate(int num, u32 base, u32 limit, u8 access, u8 flags)
+void gdt_set_gate(int num, u32 base, u32 limit, u8 access, u8 flags)
 {
     gdt[num].base_low = (base & 0xFFFF);
     gdt[num].base_middle = (base >> 16) & 0xFF;
@@ -13,7 +13,7 @@ gdt_set_gate(int num, u32 base, u32 limit, u8 access, u8 flags)
     gdt[num].limit_low = limit & 0xFFFF;
 
     gdt[num].access = access;
-    gdt[num].flags = flags;
+    gdt[num].flags = ((limit >> 16) & 0x0F) | (flags & 0xF0);
 }
 
 void gdt_init()

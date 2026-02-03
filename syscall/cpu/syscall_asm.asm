@@ -1,11 +1,14 @@
+[bits 32]
+
 [extern syscall_handler]
 
 global isr128
+global user_mode_entry  ; Export the label
 
 isr128:
     cli 
     push byte 0 ; Dummy error code
-    push dword 0x80; Interrupt number(0x80)
+    push byte 128; Interrupt number(0x80)
     jmp syscall_common_stub
 
 syscall_common_stub:
@@ -50,7 +53,7 @@ switch_to_user_mode:
 
     ; Push user mode stack segment and pointer
     push 0x23 ;User data segment (SS)
-    push esp  ;User stack pointer (ESP)
+    push user_stack_top  ;User stack pointer (ESP)
 
     ; Push EFLAGS with interrupts enabled
     pushf
@@ -74,3 +77,10 @@ user_mode_entry:
     
     ; If user shell returns, halt
     jmp $
+
+; 3. Reserve space for the user stack
+section .data
+align 16
+user_stack_bottom:
+    times 4096 db 0     ; 4KB stack
+user_stack_top:         ; Grows downwards, so we point to the end

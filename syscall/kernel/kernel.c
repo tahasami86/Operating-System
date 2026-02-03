@@ -17,28 +17,41 @@ void user_shell(){
     user_print("Welcome to User Mode Shell!\n");
     user_print("Running in Ring 3 (User Mode)\n");
     user_print("Type 'exit' to return to kernel\n\n");
-
+    //volatile int x=0;
     while(1) {
-        user_print("> ");
+        //user_print("> ");
+       // x++;
 
     }
 }
 
 
 void kernel_main() {
+    kprint("Initializing kernel...\n");
+
+    // Step 1: Initialize GDT (must come first!)
+    kprint("Setting up GDT...\n");
+    gdt_init();
+    
+    // Step 2: Initialize ISRs and IRQs  
+    kprint("Setting up interrupts...\n");
     isr_install();
     irq_install();
+    
+    // Step 3: Initialize TSS (CRITICAL before user mode!)
+    kprint("Setting up TSS...\n");
+    tss_init(5, 0x10, 0x90000);
+    
 
+    // Step 4: Initialize syscalls
+    kprint("Setting up system calls...\n");
     syscall_init();
-
-    // kprint("Type something, it will go through the kernel\n"
-    //     "Type END to halt the CPU or PAGE to request a kmalloc()\n> ");
 
     kprint("Kernel loaded successfully!\n");
     kprint("Switching to user mode...\n\n");
     
     // Switch to user mode - this will call user_shell()
-  //  switch_to_user_mode();
+    switch_to_user_mode();
 
     // We should never reach here
     kprint("ERROR: Returned from user mode!\n");

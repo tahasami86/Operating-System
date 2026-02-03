@@ -4,6 +4,7 @@
 
 #include "../cpu/types.h"
 #include "gdt.h"
+#include "../libc/mem.h"
 
 struct tss_entry {
     u32 prev_tss;   // (unused)
