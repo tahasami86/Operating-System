@@ -13,7 +13,7 @@ gdt_code:
     db 0x0          ; base 16-23 
     db 10011010b    ; Acces byte = 0x9A  
     db 11001111b    ; flags=1100 limit=1111
-    db 0x0          ; Base 56-63
+    db 0x0          ; Base=24-31
 
 gdt_data:
     dw 0xFFFF       ;limit= 0-15
@@ -21,7 +21,7 @@ gdt_data:
     db 0x0          ; base= 16-23    
     db 10010010b    ; Acces Byte=0x92
     db 11001111b    ; flags=1100 limit=1111
-    db 0x0            ;Base=56-63
+    db 0x0            ;Base=24-31
 
 gdt_user_code:  ; User code segment (0x18)
     dw 0xFFFF

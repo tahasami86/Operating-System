@@ -38,7 +38,7 @@ void kernel_main() {
     kprint("Switching to user mode...\n\n");
     
     // Switch to user mode - this will call user_shell()
-    switch_to_user_mode();
+  //  switch_to_user_mode();
 
     // We should never reach here
     kprint("ERROR: Returned from user mode!\n");
